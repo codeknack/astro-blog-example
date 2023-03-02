@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const authors = await getCollection('authors');
+---
+
+<BaseLayout>
+  <section>
+    <ul>
+      {
+        authors.map((author) => (
+          <li>
+            <a href={`/authors/${author.slug}/`}>{author.data.name}</a>
+            <p>{author.data.email}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+

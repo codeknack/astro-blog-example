@@ -1,0 +1,25 @@
+---
+import { CollectionEntry, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+	const authors = await getCollection('authors');
+	return authors.map((author) => ({
+		params: { slug: author.slug },
+		props: author,
+	}));
+}
+
+type Props = CollectionEntry<'authors'>;
+const author = Astro.props;
+const { Content } = await author.render();
+---
+
+<BaseLayout>
+  <article>
+    <h1 class="title">{author.data.name}</h1>
+    <hr />
+    <Content />
+  </article>
+</BaseLayout>
+
